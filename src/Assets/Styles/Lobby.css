@@ -1,0 +1,61 @@
+.Lobby {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .Lobby-left, .Lobby-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .Lobby-left {
+    border-right: 2px solid #ccc;
+  }
+  
+  .Lobby-right {
+    padding-left: 20px;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin: 10px 0;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  input {
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #4b7f92; /* Steel color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #cc0000; /* Darker red on hover */
+  }
