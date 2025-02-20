@@ -32,7 +32,7 @@ function Lobby() {
               placeholder="Enter your username"
               required
             />
-            <button type="submit">Register</button>
+            <button type="submit">Register meow</button>
           </form>
         ) : (
           <p>Welcome, {username}!</p>
