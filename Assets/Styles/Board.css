@@ -1,0 +1,33 @@
+.board-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    background-image: url('../Images/bs-background.jpg');
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+.board {
+    display: grid;
+    grid-template-columns: repeat(10, 40px); 
+    grid-template-rows: repeat(10, 40px); 
+    gap: 2px; 
+    background-color:  rgba(255, 255, 255, 0.1);
+    padding: 5px;
+    width: fit-content;
+    border: 3px solid black; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
+  }
+  
+  .cell {
+    width: 40px;
+    height: 40px;
+    background-color:transparent;
+    border: 1px solid darkblue; 
+    transition: background-color 0.3s ease;
+}
+.cell:hover {
+    background-color: rgba(255, 255, 255, 0.2); 
+  }
