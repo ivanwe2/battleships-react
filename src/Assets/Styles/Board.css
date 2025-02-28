@@ -1,6 +1,5 @@
 .board-container {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh; 
@@ -31,9 +30,10 @@
 .cell:hover {
     background-color: rgba(255, 255, 255, 0.2); 
   }
-  .ships-container {
-    margin-top: 20px; 
+.ships-container {
+    margin-left: 20px; 
     display: flex;
+    flex-direction: column;
     gap: 10px; 
   }
   
@@ -46,4 +46,18 @@
   
   .ship:hover {
     transform: scale(1.1); /* Увеличава кораба леко */
+  }
+
+  .rotate-button{
+    margin-top: 10px;
+    padding:5px 10px;
+    background-color: #4CAF50;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:14px;
+  }
+  .rotate-button:hover{
+    background-color: #45a049;
   }
