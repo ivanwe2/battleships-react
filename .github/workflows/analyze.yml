@@ -6,7 +6,7 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 jobs:
-  build:
+  analyze:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -27,3 +27,7 @@ jobs:
       uses: SonarSource/sonarqube-scan-action@v5
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+        args: >
+          -Dsonar.projectKey=ivanwe2_battleships-react
+          -Dsonar.organization=ivanwe2
