@@ -2,6 +2,10 @@
 
 A classic naval warfare game implemented in React.
 
+## Deployment
+
+[![Deploy Status](https://github.com/ivanwe2/battleships-react/actions/workflows/deploy.yml/badge.svg)](https://github.com/ivanwe2/battleships-react/actions)
+
 ## Code Quality & Analysis
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ivanwe2_battleships-react&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ivanwe2_battleships-react)
