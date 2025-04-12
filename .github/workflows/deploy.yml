@@ -34,7 +34,10 @@ jobs:
 
     - name: Install dependencies
       run: npm ci
-
+      
+    - name: Authenticate with GitHub
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+      
     - name: Deploy to GitHub Pages
       run: npm run deploy
       env:
