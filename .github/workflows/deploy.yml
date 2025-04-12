@@ -17,10 +17,10 @@ jobs:
       with:
         persist-credentials: true
 
-    # - name: Set up Git user
-    #   run: |
-    #     git config --global user.name "ivanwe2"
-    #     git config --global user.email "ivanrusev03@schoolmath.eu"
+    - name: Set up Git user
+      run: |
+        git config --global user.name "ivanwe2"
+        git config --global user.email "ivanrusev03@schoolmath.eu"
 
     - name: Set up Node.js
       uses: actions/setup-node@v4
