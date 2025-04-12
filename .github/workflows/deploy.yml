@@ -18,8 +18,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      # with:
-      #   persist-credentials: true
+      with:
+        persist-credentials: true
 
     - name: Set up Git user
       run: |
