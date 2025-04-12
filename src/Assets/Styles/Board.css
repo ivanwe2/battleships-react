@@ -1,0 +1,111 @@
+.board-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-image: url('../Images/bs-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Фаза на поставяне – дъска и панел отдясно */
+.placement-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.grid-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.boards-wrapper {
+  display: flex;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+/* Мрежа за дъските */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(10, 30px);
+  grid-template-rows: repeat(10, 30px);
+  gap: 2px;
+  padding: 5px;
+  border: 3px solid black;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid darkblue;
+  transition: background-color 0.3s ease;
+}
+
+.cell:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Панел за корабите в фазата на поставяне */
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.ship {
+  height: 30px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.ship:hover {
+  transform: scale(1.1);
+}
+
+.rotate-button,
+.start-button {
+  margin-top: 10px;
+  padding: 6px 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 120px;
+  transition: background-color 0.3s ease;
+}
+
+.rotate-button:hover,
+.start-button:hover {
+  background-color: #45a049;
+}
+
+/* Панел за специални муниции */
+.munitions-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.munitions-panel .munition {
+  width: 40px;
+  height: 40px;
+  cursor: grab;
+}
+
+
+
+
