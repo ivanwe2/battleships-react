@@ -6,17 +6,12 @@ import battleship from "../Assets/Images/ships/battleship.png";
 import destroyer from "../Assets/Images/ships/destroyer.png";
 
 const SHIP_TYPES = [
-  { type: "carrier", size: 5, count: 1 },
-  { type: "cruiser", size: 4, count: 1 },
-  { type: "battleship", size: 3, count: 1 },
-  { type: "destroyer", size: 2, count: 1 },
+  { type: "carrier", size: 5, count: 1, image: carrier },
+  { type: "cruiser", size: 4, count: 1, image: cruiser },
+  { type: "battleship", size: 3, count: 1, image: battleship },
+  { type: "destroyer", size: 2, count: 1, image: destroyer },
 ];
-const [placedShips, setPlacedShips] = useState({
-  carrier: 0,
-  cruiser: 0,
-  battleship: 0,
-  destroyer: 0,
-});
+
 const Board = () => {
   // Фази на играта: placementPhase – поставяне на корабите, isBattleStarted – биткова фаза.
   const [placementPhase, setPlacementPhase] = useState(true);
@@ -27,6 +22,7 @@ const Board = () => {
   // За двама играчи – след фазата на поставяне.
   const [player1Ships, setPlayer1Ships] = useState([]);
   const [player2Ships, setPlayer2Ships] = useState([]);
+
   const [placedShipsCount, setPlacedShipsCount] = useState({
     carrier: 0,
     cruiser: 0,
@@ -119,15 +115,11 @@ const Board = () => {
     const shipType = e.dataTransfer.getData("shipType");
     const shipSize = parseInt(e.dataTransfer.getData("shipSize"));
     const shipOrientation = e.dataTransfer.getData("orientation");
-    //const shipConfig !!!!!!!!!!
-    if (
-      placedShips[shipType] >= SHIP_TYPES.find((s) => s.type === shipType).count
-    ) {
-      alert(
-        `You can only place ${
-          SHIP_TYPES.fund((s) => s.type === shipType).count
-        } ${shipType}(s)`
-      );
+
+    const shipConfig = SHIP_TYPES.find((s) => s.type === shipType);
+
+    if (placedShipsCount[shipType] >= shipConfig.count) {
+      alert(`You can only place ${shipConfig.count} ${shipType}(s)`);
       return;
     }
 
@@ -143,32 +135,70 @@ const Board = () => {
       }
     }
 
-    let occupied = [];
-    let bufferZone = [];
-    if (shipOrientation === "horizontal") {
-      for (let i = 0; i < shipSize; i++) {
-        occupied.push(cellIndex + i);
-      }
-    } else {
-      for (let i = 0; i < shipSize; i++) {
-        occupied.push(cellIndex + i * 10);
-      }
+    const occupied = [];
+    for (let i = 0; i < shipSize; i++) {
+      occupied.push(
+        shipOrientation === "horizontal" ? cellIndex + i : cellIndex + i * 10
+      );
     }
-    setTempShips((prev) => [
+    const bufferZone = calculateBufferZone(occupied);
+    // Проверка за припокриване с вече поставени кораби
+    const allOccupied = [
+      ...tempShips.flatMap((s) => [...s.occupied, ...s.bufferZone]),
+    ];
+    const isOverlapping = occupied.some((cell) => allOccupied.includes(cell));
+
+    if (isOverlapping) {
+      alert("Ships cannot overlap or be adjacent!");
+      return;
+    }
+
+    const newShip = {
+      shipType,
+      shipSize,
+      shipOrientation,
+      cellIndex,
+      occupied,
+      bufferZone,
+      image: shipConfig.image,
+    };
+
+    setTempShips((prev) => [...prev, newShip]);
+    setPlacedShipsCount((prev) => ({
       ...prev,
-      { shipType, shipSize, shipOrientation, cellIndex, occupied },
-    ]);
+      [shipType]: prev[shipType] + 1,
+    }));
   };
 
   // Завършване на фазата на поставяне – първо за Player 1, после за Player 2.
   const handlePlacementDone = () => {
+    const allShipsPlaced = SHIP_TYPES.every(
+      (ship) => placedShipsCount[ship.type] >= ship.count
+    );
+
+    if (!allShipsPlaced) {
+      alert("You must place all ships before continuing!");
+      return;
+    }
     if (activePlayer === 1) {
       setPlayer1Ships(tempShips);
       setTempShips([]);
+      setPlacedShipsCount({
+        carrier: 0,
+        cruiser: 0,
+        battleship: 0,
+        destroyer: 0,
+      });
       setActivePlayer(2);
     } else {
       setPlayer2Ships(tempShips);
       setTempShips([]);
+      setPlacedShipsCount({
+        carrier: 0,
+        cruiser: 0,
+        battleship: 0,
+        destroyer: 0,
+      });
       setPlacementPhase(false);
       setActivePlayer(1);
     }
@@ -259,63 +289,119 @@ const Board = () => {
 
   // Функция за рендиране на мрежата (grid) – в зависимост от режима:
   // mode: "placement", "player", "opponent"
-  const renderGrid = (mode) => {
-    const cells = Array.from({ length: 100 }, (_, i) => {
-      let bg = "transparent";
-      if (placementPhase && mode === "placement") {
-        if (tempShips.some((s) => s.occupied.includes(i))) {
-          bg = "rgba(0, 255, 0, 0.3)";
-        }
-      }
-      if (isBattleStarted) {
-        if (mode === "player") {
-          if (
-            activePlayer === 1 &&
-            player1Ships.some((s) => s.occupied.includes(i))
-          ) {
-            bg = "rgba(0, 255, 0, 0.3)";
-          }
-          if (
-            activePlayer === 2 &&
-            player2Ships.some((s) => s.occupied.includes(i))
-          ) {
-            bg = "rgba(0, 255, 0, 0.3)";
-          }
-        } else if (mode === "opponent") {
-          if (activePlayer === 1 && attacks1.includes(i)) {
-            bg = "rgba(255, 0, 0, 0.4)";
-          }
-          if (activePlayer === 2 && attacks2.includes(i)) {
-            bg = "rgba(255, 0, 0, 0.4)";
-          }
-        }
-      }
-      return (
-        <div
-          key={i}
-          className="cell"
-          onDragOver={(e) => {
-            if (isBattleStarted && mode === "opponent") e.preventDefault();
-            else if (!isBattleStarted && placementPhase) e.preventDefault();
-          }}
-          onDrop={(e) => {
-            if (!isBattleStarted && placementPhase) {
-              handleDrop(e, i);
-            } else if (isBattleStarted && mode === "opponent") {
-              handleSpecialDrop(e, i);
-            }
-          }}
-          onClick={(e) => {
-            if (isBattleStarted && mode === "opponent") {
-              if (!e.defaultPrevented) handleAttack(i);
-            }
-          }}
-          style={{ backgroundColor: bg }}
-        ></div>
-      );
-    });
-    return <div className="grid">{cells}</div>;
+  ///////
+  const handleRemoveLastShip = () => {
+    if (tempShips.length === 0) return;
+
+    const lastShip = tempShips[tempShips.length - 1];
+    setTempShips((prev) => prev.slice(0, -1));
+    setPlacedShipsCount((prev) => ({
+      ...prev,
+      [lastShip.shipType]: prev[lastShip.shipType] - 1,
+    }));
   };
+
+  const renderGrid = (mode) => {
+    return (
+      <div className="grid">
+        {Array.from({ length: 100 }).map((_, i) => {
+          let bg = "transparent";
+          let shipImage = null;
+          let shipOrientation = "horizontal";
+          let shipPartStyle = {};
+          let ship = null;
+          let isBufferZone = false;
+
+          if (placementPhase && mode === "placement") {
+            ship = tempShips.find((s) => s.occupied.includes(i));
+            isBufferZone = tempShips.some((s) => s.bufferZone.includes(i));
+
+            if (ship) {
+              bg = "rgba(0, 255, 0, 0.3)";
+              shipImage = ship.image;
+              shipOrientation = ship.shipOrientation;
+
+              const shipIndex = ship.occupied.indexOf(i);
+              const cellSize = 30; // Размер на клетката в пиксели
+
+              if (shipOrientation === "horizontal") {
+                shipPartStyle = {
+                  position: "absolute",
+                  width: `${ship.shipSize * cellSize}px`,
+                  height: `${cellSize}px`,
+                  left: `-${shipIndex * cellSize}px`,
+                  objectFit: "cover",
+                };
+              } else {
+                shipPartStyle = {
+                  position: "absolute",
+                  width: `${cellSize}px`,
+                  height: `${ship.shipSize * cellSize}px`,
+                  top: `-${shipIndex * cellSize}px`,
+                  objectFit: "cover",
+                };
+              }
+            } else if (isBufferZone) {
+              bg = "rgba(255, 255, 0, 0.1)";
+            }
+          }
+
+          return (
+            <div
+              key={i}
+              className="cell"
+              onDragOver={(e) => {
+                if (
+                  (isBattleStarted && mode === "opponent") ||
+                  (!isBattleStarted && placementPhase)
+                ) {
+                  e.preventDefault();
+                }
+              }}
+              onDrop={(e) => {
+                if (!isBattleStarted && placementPhase) {
+                  handleDrop(e, i);
+                } else if (isBattleStarted && mode === "opponent") {
+                  handleSpecialDrop(e, i);
+                }
+              }}
+              onClick={(e) => {
+                if (
+                  isBattleStarted &&
+                  mode === "opponent" &&
+                  !e.defaultPrevented
+                ) {
+                  handleAttack(i);
+                }
+              }}
+              style={{
+                backgroundColor: bg,
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              {shipImage && (
+                <img
+                  src={shipImage}
+                  alt="ship"
+                  style={{
+                    ...shipPartStyle,
+                    transform:
+                      shipOrientation === "vertical" ? "rotate(90deg)" : "none",
+                  }}
+                />
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  // Проверка дали всички кораби са поставени за бутона Done Placement
+  const allShipsPlaced = SHIP_TYPES.every(
+    (ship) => placedShipsCount[ship.type] >= ship.count
+  );
 
   return (
     <div className="board-container">
@@ -328,7 +414,7 @@ const Board = () => {
             {renderGrid("placement")}
           </div>
           <div className="panel">
-            {ships.map((ship) => (
+            {SHIP_TYPES.map((ship) => (
               <img
                 key={ship.type}
                 src={ship.image}
@@ -339,13 +425,29 @@ const Board = () => {
                 style={{
                   transform:
                     orientation === "vertical" ? "rotate(90deg)" : "none",
+                  opacity: placedShipsCount[ship.type] >= ship.count ? 0.5 : 1,
+                  cursor:
+                    placedShipsCount[ship.type] >= ship.count
+                      ? "not-allowed"
+                      : "grab",
                 }}
               />
             ))}
             <button className="rotate-button" onClick={handleRotate}>
               Rotate Ships
             </button>
-            <button className="start-button" onClick={handlePlacementDone}>
+            <button
+              className="remove-button"
+              onClick={handleRemoveLastShip}
+              disabled={tempShips.length === 0}
+            >
+              Remove Last Ship
+            </button>
+            <button
+              className="start-button"
+              onClick={handlePlacementDone}
+              disabled={!allShipsPlaced}
+            >
               Done Placement
             </button>
           </div>

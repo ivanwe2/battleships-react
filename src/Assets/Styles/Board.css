@@ -43,12 +43,19 @@
 }
 
 .cell {
+  position: relative;
   width: 30px;
   height: 30px;
   border: 1px solid darkblue;
   transition: background-color 0.3s ease;
+  overflow: hidden;
 }
 
+.cell img {
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
 .cell:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
@@ -106,6 +113,26 @@
   cursor: grab;
 }
 
+.remove-button {
+  margin-top: 10px;
+  padding: 6px 12px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 120px;
+  transition: background-color 0.3s ease;
+}
 
+.remove-button:hover {
+  background-color: #d32f2f;
+}
+
+.remove-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
 
 
