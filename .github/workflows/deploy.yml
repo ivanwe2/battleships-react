@@ -20,7 +20,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: github-pages-artifact
-          run-id: ${{ github.event.workflow_run.id }}
           path: build
 
       - name: Setup Pages
