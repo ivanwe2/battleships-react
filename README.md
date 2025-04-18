@@ -2,9 +2,15 @@
 
 A classic naval warfare game implemented in React.
 
-## Deployment
+## CI/CD Status
 
-[![Deploy Status](https://github.com/ivanwe2/battleships-react/actions/workflows/deploy.yml/badge.svg)](https://github.com/ivanwe2/battleships-react/actions)
+[![CI/CD Workflow](https://github.com/ivanwe2/battleships-react/actions/workflows/cicd.yml/badge.svg)](https://github.com/ivanwe2/battleships-react/actions/workflows/cicd.yml)
+
+| Job     | Status Link |
+|---------|-------------|
+| 🛠 Build   | [Check status](https://github.com/ivanwe2/battleships-react/actions/workflows/cicd.yml?query=job%3Abuild) |
+| 🔍 Analyze | [Check status](https://github.com/ivanwe2/battleships-react/actions/workflows/cicd.yml?query=job%3Aanalyze) |
+| 🚀 Deploy  | [Check status](https://github.com/ivanwe2/battleships-react/actions/workflows/cicd.yml?query=job%3Adeploy) |
 
 ## Code Quality & Analysis
 
