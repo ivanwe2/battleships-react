@@ -1,70 +1,39 @@
-# Getting Started with Create React App
+# Battleships
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A classic naval warfare game implemented in React.
 
-## Available Scripts
+## CI/CD Status
 
-In the project directory, you can run:
+[![CI/CD Workflow](https://github.com/ivanwe2/battleships-react/actions/workflows/cicd.yml/badge.svg)](https://github.com/ivanwe2/battleships-react/actions/workflows/cicd.yml)
 
-### `npm start`
+| Job     | Status Link |
+|---------|-------------|
+| 🛠 Build   | [Check status](https://github.com/ivanwe2/battleships-react/actions/workflows/cicd.yml?query=job%3Abuild) |
+| 🔍 Analyze | [Check status](https://github.com/ivanwe2/battleships-react/actions/workflows/cicd.yml?query=job%3Aanalyze) |
+| 🚀 Deploy  | [Check status](https://github.com/ivanwe2/battleships-react/actions/workflows/cicd.yml?query=job%3Adeploy) |
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Code Quality & Analysis
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ivanwe2_battleships-react&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ivanwe2_battleships-react)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=ivanwe2_battleships-react&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=ivanwe2_battleships-react)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=ivanwe2_battleships-react&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=ivanwe2_battleships-react)
+<!-- [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ivanwe2_battleships-react&metric=coverage)](https://sonarcloud.io/summary/new_code?id=ivanwe2_battleships-react) -->
 
-### `npm test`
+### Detailed Metrics
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Maintainability
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=ivanwe2_battleships-react&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=ivanwe2_battleships-react)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=ivanwe2_battleships-react&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=ivanwe2_battleships-react)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=ivanwe2_battleships-react&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=ivanwe2_battleships-react)
 
-### `npm run build`
+#### Security & Reliability
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=ivanwe2_battleships-react&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=ivanwe2_battleships-react)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=ivanwe2_battleships-react&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=ivanwe2_battleships-react)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=ivanwe2_battleships-react&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=ivanwe2_battleships-react)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=ivanwe2_battleships-react&metric=bugs)](https://sonarcloud.io/summary/new_code?id=ivanwe2_battleships-react)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### Code Metrics
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=ivanwe2_battleships-react&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=ivanwe2_battleships-react)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=ivanwe2_battleships-react&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=ivanwe2_battleships-react)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[View Full Analysis Dashboard](https://sonarcloud.io/summary/new_code?id=ivanwe2_battleships-react)
