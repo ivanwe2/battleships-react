@@ -4,13 +4,13 @@ A classic naval warfare game implemented in React.
 
 ## CI/CD Status
 
-[![CI/CD Workflow](https://github.com/ivanwe2/battleships-react/actions/workflows/cicd.yml/badge.svg)](https://github.com/ivanwe2/battleships-react/actions/workflows/cicd.yml)
+[![CI/CD Workflow](https://github.com/ivanwe2/battleships-react/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/ivanwe2/battleships-react/actions/workflows/ci-cd.yml)
 
 | Job     | Status Link |
 |---------|-------------|
-| 🛠 Build   | [Check status](https://github.com/ivanwe2/battleships-react/actions/workflows/cicd.yml?query=job%3Abuild) |
-| 🔍 Analyze | [Check status](https://github.com/ivanwe2/battleships-react/actions/workflows/cicd.yml?query=job%3Aanalyze) |
-| 🚀 Deploy  | [Check status](https://github.com/ivanwe2/battleships-react/actions/workflows/cicd.yml?query=job%3Adeploy) |
+| 🛠 Build   | [Check status](https://github.com/ivanwe2/battleships-react/actions/workflows/ci-cd.yml?query=job%3Abuild) |
+| 🔍 Analyze | [Check status](https://github.com/ivanwe2/battleships-react/actions/workflows/ci-cd.yml?query=job%3Aanalyze) |
+| 🚀 Deploy  | [Check status](https://github.com/ivanwe2/battleships-react/actions/workflows/ci-cd.yml?query=job%3Adeploy) |
 
 ## Code Quality & Analysis
 
