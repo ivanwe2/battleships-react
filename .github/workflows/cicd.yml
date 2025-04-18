@@ -76,8 +76,13 @@ jobs:
           name: github-pages-artifact
           path: build
 
-      - name: Setup GitHub Pages
-        uses: actions/configure-pages@v3
+      - name: Upload Pages artifact (for deploy-pages)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v3
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v3
