@@ -1,9 +1,9 @@
 import React from 'react';
-import '../Assets/Styles/app.css';
 import { Route, Routes } from 'react-router-dom';
 import Lobby from '../Pages/Lobby';
 import Home from '../Pages/Home';
 import Game from '../Pages/Game';
+import '../Assets/Styles/app.css';
 
 function App() {
   return (
