@@ -1,5 +1,6 @@
 {
   "name": "battleships-react",
+  "homepage": "https://ivanwe2.github.io/battleships-react",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,7 +10,6 @@
     "react-router-dom": "^7.1.5",
     "react-scripts": "5.0.1"
   },
-  "homepage": "https://ivanwe2.github.io/battleships-react",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
