@@ -40,6 +40,9 @@ jobs:
           -Dsonar.projectKey=ivanwe2_battleships-react
           -Dsonar.organization=ivanwe2
           
+    - name: List build output
+      run: ls -R build
+      
     - name: Upload build artifact
       uses: actions/upload-artifact@v4
       with:
