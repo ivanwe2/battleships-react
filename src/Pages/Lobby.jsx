@@ -71,12 +71,17 @@ function Lobby() {
     }
   };
 
-  const handleInvite = (player) => {
+  const handleInvite = (event, player) => {
     if (socketRef.current?.readyState === WebSocket.OPEN) {
       socketRef.current.send(
         JSON.stringify({ type: "INVITE", from: username, to: player })
       );
     }
+
+    const inviteBtn = event.target;
+    inviteBtn.textContent = "Sent!";
+    inviteBtn.disabled = true;
+    inviteBtn.classList.add("invite-sent");
   };
 
   const handleAcceptInvite = () => {
@@ -92,7 +97,15 @@ function Lobby() {
 
   const renderRegisterSection = () => (
     <div className="lobby-panel">
-      <h2>{isLoggedIn ? `Welcome, ${username}!` : "Register"}</h2>
+      <h2>
+      {isLoggedIn ? (
+        <>
+          Prepare for <span className="battle-text">battle</span>, {username}!
+        </>
+      ) : (
+        "Register"
+      )}
+      </h2>
       {!isLoggedIn && (
         <form onSubmit={handleRegister}>
           <input
@@ -113,11 +126,12 @@ function Lobby() {
       <h2>Online Players</h2>
       {isLoggedIn ? (
         <ul>
-          {players.map((player, i) => (
+          <li key="you" className="player-self">You</li>
+          {players.filter((player) => player !== username).map((player, i) => (
             <li key={i}>
               {player}
               {player !== username && (
-                <button className="invite-btn" onClick={() => handleInvite(player)}>
+                <button className="invite-btn" onClick={(e) => handleInvite(e, player)}>
                   Invite
                 </button>
               )}
