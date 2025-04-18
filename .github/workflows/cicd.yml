@@ -27,9 +27,10 @@ jobs:
       - name: Build React app
         run: npm run build
 
-      - name: Upload build artifact (for Pages)
-        uses: actions/upload-pages-artifact@v3
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
         with:
+          name: github-pages-artifact
           path: build
 
   analyze:
@@ -64,10 +65,26 @@ jobs:
     needs: [build, analyze]
     if: ${{ github.ref == 'refs/heads/main' }}
     permissions:
-      contents: write
-      pages: write
-      id-token: write
+      contents: write  # Needed to push to gh-pages branch
+      pages: write     # Needed to deploy to GitHub Pages
+      id-token: write  # Needed for GitHub Actions auth
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages-artifact
+          path: build
+
+      - name: Upload Pages artifact (for deploy-pages)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build
+
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v3
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
