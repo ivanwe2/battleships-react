@@ -73,18 +73,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          name: github-pages-artifact
-          path: build
+          node-version: 18
+          cache: 'npm'
 
-      - name: Upload Pages artifact (for deploy-pages)
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: build
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v3
+      - name: Run deploy script
+        run: npm run deploy  # This will run 'gh-pages -d build'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Make sure your token has the correct permissions
