@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import '../Assets/Styles/Game.css';
+import '../Assets/Styles/game.css';
 
 const BOARD_SIZE = 10;
 

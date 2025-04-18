@@ -13,7 +13,7 @@ body {
   color: #FFFFFF;
 }
 
-.App {
+.app {
   text-align: center;
   min-height: 100vh; /* Ensure the App component takes full height */
   display: flex;

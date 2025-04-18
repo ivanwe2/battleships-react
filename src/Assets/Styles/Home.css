@@ -1,4 +1,4 @@
-.Home-header {
+.home-header {
     background-color: transparent;
     min-height: 100vh;
     display: flex;
@@ -11,11 +11,11 @@
     position: relative;
   }
   
-  .Home-title {
+  .home-title {
     transition: transform 1s ease-in-out;
   }
   
-  .Home-title.hovered {
+  .home-title.hovered {
     transform: translateY(-200px);
   }
   
