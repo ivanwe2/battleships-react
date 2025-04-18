@@ -38,11 +38,19 @@ jobs:
       
     - name: Authenticate with GitHub
       run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-    
-    - name: Predeploy
-      run: npm run predeploy
+      
+    - name: Build project
+      run: npm run build
+
+    - name: Setup Pages
+      uses: actions/configure-pages@v3
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v2
+      with:
+        path: 'build'  # Or 'dist' if using Vite
       
     - name: Deploy to GitHub Pages
-      run: npm run deploy
+      uses: actions/deploy-pages@v2
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
