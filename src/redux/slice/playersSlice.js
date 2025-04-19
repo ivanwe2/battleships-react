@@ -12,7 +12,7 @@ export const playersSlice = createSlice({
       state.players.push(action.payload);
     },
     logoutPlayer: (state, action) => {
-      state.players = state.players.filter(player => player !== action.payload);
+      state.players = state.players.filter(player => player.id !== action.payload.id);
     },
     setPlayers: (state, action) => {
       state.players = action.payload;
