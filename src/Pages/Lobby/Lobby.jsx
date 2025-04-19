@@ -4,9 +4,9 @@ import {
   setPlayers,
   registerPlayer,
   logoutPlayer,
-} from "../redux/slice/playersSlice";
+} from "../../redux/slice/playersSlice";
 import { useNavigate } from "react-router-dom";
-import "../Assets/Styles/lobby.css";
+import "./Lobby.css";
 
 function Lobby() {
   const [username, setUsername] = useState("");

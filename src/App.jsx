@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Lobby from '../Pages/Lobby';
-import Home from '../Pages/Home';
-import Game from '../Pages/Game';
-import '../Assets/Styles/app.css';
+import Lobby from './Pages/Lobby/Lobby';
+import Home from './Pages/Home/Home';
+import Game from './Pages/Game/Game';
+import './Assets/Styles/App.css';
 
 function App() {
   return (

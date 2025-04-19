@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../Assets/Styles/home.css';
+import './Home.css';
 
 function Home() {
   const [isHovered, setIsHovered] = useState(false);
