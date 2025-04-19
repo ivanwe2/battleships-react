@@ -57,13 +57,13 @@ const Game = () => {
         {board.map((row, rowIndex) => (
           <div key={rowIndex} className="board-row">
             {row.map((cell, colIndex) => (
-              <div
+              <button
                 key={colIndex}
                 className="board-cell"
                 onClick={() => sendAttack(rowIndex, colIndex)}
               >
                 {cell}
-              </div>
+              </button>
             ))}
           </div>
         ))}
