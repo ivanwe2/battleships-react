@@ -1,34 +1,309 @@
 .game-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-}
+    min-height: 100vh;
+    padding: 20px;
+    color: white;
+    background: linear-gradient(135deg, #1a2a3a 0%, #0d1b2a 100%);
+  }
   
-.board {
-    display: grid;
-    grid-template-rows: repeat(10, 1fr);
-    grid-template-columns: repeat(10, 1fr);
-    gap: 2px;
-}
-  
-.board-row {
+  .game-header {
     display: flex;
-}
-
-.board-cell {
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .game-header h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    color: #4b7f92;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  .game-status {
+    text-align: right;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.2);
+  }
+  
+  .game-status.placement {
+    background: linear-gradient(90deg, #4b7f92 0%, #375f6e 100%);
+  }
+  
+  .game-status.battle {
+    background: linear-gradient(90deg, #cc0000 0%, #990000 100%);
+  }
+  
+  .game-status.gameOver {
+    background: linear-gradient(90deg, #333333 0%, #222222 100%);
+  }
+  
+  .status-message {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  
+  .game-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+  
+  .boards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    flex: 1;
+  }
+  
+  .board-container {
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+  }
+  
+  .board-container h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #4b7f92;
+  }
+  
+  .board {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #4b7f92;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .board-labels {
+    display: flex;
+    height: 30px;
+  }
+  
+  .board-label {
     width: 30px;
     height: 30px;
-    background-color: lightblue;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-weight: bold;
+    color: #4b7f92;
+  }
+  
+  .corner-label {
+    background-color: rgba(75, 127, 146, 0.2);
+  }
+  
+  .board-row {
+    display: flex;
+    height: 40px;
+  }
+  
+  .board-cell {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(75, 127, 146, 0.1);
+    border: 1px solid rgba(75, 127, 146, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+    position: relative;
+    transition: all 0.2s ease;
+  }
+  
+  .cell-coordinate {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    font-size: 8px;
+    opacity: 0.5;
+  }
+  
+  .board-cell:hover {
+    background-color: rgba(75, 127, 146, 0.2);
+  }
+  
+  .clickable {
     cursor: pointer;
-}
-
-.board-cell:hover {
-    background-color: lightcoral;
-}
-
-.messages {
+  }
+  
+  .clickable:hover {
+    background-color: rgba(204, 0, 0, 0.2);
+    transform: scale(1.05);
+  }
+  
+  .ship-cell {
+    background-color: #4b7f92;
+  }
+  
+  .carrier-cell { background-color: #444444; }
+  .battleship-cell { background-color: #555555; }
+  .cruiser-cell { background-color: #666666; }
+  .submarine-cell { background-color: #777777; }
+  .destroyer-cell { background-color: #888888; }
+  
+  .hit {
+    background-color: rgba(204, 0, 0, 0.7) !important;
+    animation: hit-animation 0.5s;
+  }
+  
+  .miss {
+    background-color: rgba(100, 149, 237, 0.5) !important;
+  }
+  
+  @keyframes hit-animation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+  
+  .valid-placement {
+    background-color: rgba(0, 128, 0, 0.3);
+  }
+  
+  .invalid-placement {
+    background-color: rgba(255, 0, 0, 0.3);
+  }
+  
+  .game-sidebar {
+    flex: 0 0 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .ship-selection {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .ship-selection h2 {
+    margin-top: 0;
+    color: #4b7f92;
+    text-align: center;
+  }
+  
+  .ship-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .ship-controls button {
+    flex: 1;
+    padding: 10px;
+    background-color: #4b7f92;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .ship-controls button:hover {
+    background-color: #375f6e;
+    transform: translateY(-2px);
+  }
+  
+  .ships-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .ship-item {
+    background-color: rgba(75, 127, 146, 0.1);
+    border-radius: 6px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .ship-item:hover {
+    background-color: rgba(75, 127, 146, 0.2);
+  }
+  
+  .ship-item.selected {
+    background-color: rgba(75, 127, 146, 0.4);
+    transform: translateX(5px);
+    box-shadow: -3px 0 0 #4b7f92;
+  }
+  
+  .ship-item.placed {
+    opacity: 0.6;
+    cursor: default;
+  }
+  
+  .ship-preview {
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+  
+  .ship-name {
+    font-size: 0.8rem;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+  
+  .ship-status {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .submit-button {
+    width: 100%;
+    padding: 12px;
     margin-top: 20px;
-}
+    background-color: #cc0000;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #990000;
+    transform: translateY(-2px);
+  }
+  
+  .return-button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #4b7f92;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .return-button:hover {
+    background-color: #375f6e;
+  }
+  
+  .messages-container {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
