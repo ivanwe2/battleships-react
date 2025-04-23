@@ -2,15 +2,23 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    color: white;
 }
-  
+
 .board {
     display: grid;
     grid-template-rows: repeat(10, 1fr);
     grid-template-columns: repeat(10, 1fr);
     gap: 2px;
+    margin: 20px 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 5px;
 }
-  
+
 .board-row {
     display: flex;
 }
@@ -18,17 +26,182 @@
 .board-cell {
     width: 30px;
     height: 30px;
-    background-color: lightblue;
+    background-color: #1e4a6d;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    border: 1px solid #0a2847;
+    transition: all 0.2s ease;
+    font-weight: bold;
 }
 
 .board-cell:hover {
-    background-color: lightcoral;
+    background-color: #3a6d91;
+}
+
+.ship-cell {
+    background-color: #2a7b2a;
+}
+
+.hit-cell {
+    background-color: #cc0000;
+    color: white;
+}
+
+.miss-cell {
+    background-color: #4a6a8a;
+    color: white;
 }
 
 .messages {
     margin-top: 20px;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.messages h2 {
+    margin-top: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 10px;
+}
+
+.messages ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.messages li {
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.placement-controls, .battle-controls {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: rgba(29, 78, 137, 0.5);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+}
+
+.ship-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.ship-button, .special-button {
+    padding: 8px 16px;
+    background-color: #4b7f92;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ship-button:hover, .special-button:hover {
+    background-color: #6a95a6;
+    transform: scale(1.05);
+}
+
+.ship-button.selected, .special-button.selected {
+    background-color: #cc0000;
+    transform: scale(1.1);
+}
+
+.ship-button.disabled {
+    background-color: #333;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.placement-actions, .special-attacks {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+button {
+    padding: 8px 16px;
+    background-color: #4b7f92;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background-color: #cc0000;
+    transform: scale(1.05);
+}
+
+button:disabled {
+    background-color: #333;
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.finish-button {
+    background-color: #2a7b2a;
+}
+
+.boards-container {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    width: 100%;
+}
+
+.player-board, .opponent-board {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.turn-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.game-over {
+    text-align: center;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.game-over h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.game-over button {
+    padding: 12px 24px;
+    font-size: 18px;
+    background-color: #cc0000;
+}
+
+@media (max-width: 768px) {
+    .boards-container {
+        flex-direction: column;
+    }
+    
+    .board-cell {
+        width: 25px;
+        height: 25px;
+    }
 }
