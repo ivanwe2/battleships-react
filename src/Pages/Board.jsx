@@ -13,13 +13,10 @@ const SHIP_TYPES = [
 ];
 
 const Board = () => {
-  // Фази на играта: placementPhase – поставяне на корабите, isBattleStarted – биткова фаза.
   const [placementPhase, setPlacementPhase] = useState(true);
   const [isBattleStarted, setIsBattleStarted] = useState(false);
 
-  // За поставяне: временно съхранение на поставените кораби.
   const [tempShips, setTempShips] = useState([]);
-  // За двама играчи – след фазата на поставяне.
   const [player1Ships, setPlayer1Ships] = useState([]);
   const [player2Ships, setPlayer2Ships] = useState([]);
 
@@ -36,10 +33,8 @@ const Board = () => {
   const [activePlayer, setActivePlayer] = useState(1);
   const [timer, setTimer] = useState(60);
 
-  // Състояние за специалната муниция: "none", "airplane" или "bomb".
   const [specialMode, setSpecialMode] = useState("none");
 
-  // Муниции за двама играчи.
   const [player1Munitions, setPlayer1Munitions] = useState({
     airplane: 2,
     bomb: 2,
@@ -49,10 +44,8 @@ const Board = () => {
     bomb: 2,
   });
 
-  // Настройки за корабите.
   const [orientation, setOrientation] = useState("horizontal");
 
-  // Таймерът стартира, когато битката е започнала.
   useEffect(() => {
     if (isBattleStarted) {
       const interval = setInterval(() => {
@@ -71,7 +64,7 @@ const Board = () => {
   const switchTurn = () => {
     setActivePlayer((prev) => (prev === 1 ? 2 : 1));
     setTimer(60);
-    setSpecialMode("none"); // Ресетваме специалната муниция при смяна.
+    setSpecialMode("none"); 
   };
 
   const handleRotate = () => {
@@ -80,7 +73,6 @@ const Board = () => {
     );
   };
 
-  // Drag start за корабите (само при фазата на поставяне).
   const handleDragStart = (e, shipType, shipSize) => {
     if (!placementPhase) return;
     e.dataTransfer.setData("shipType", shipType);
@@ -88,7 +80,6 @@ const Board = () => {
     e.dataTransfer.setData("orientation", orientation);
   };
 
-  // за специална муниция – самолет или бомба.
   const handleSpecialDragStart = (e, type) => {
     if (!isBattleStarted) return;
     e.dataTransfer.setData("special", type);
@@ -109,7 +100,6 @@ const Board = () => {
     });
     return Array.from(buffer);
   };
-  // При поставяне – изчисляваме кои клетки заема корабът.
   const handleDrop = (e, cellIndex) => {
     if (!placementPhase) return;
     const shipType = e.dataTransfer.getData("shipType");
@@ -142,7 +132,6 @@ const Board = () => {
       );
     }
     const bufferZone = calculateBufferZone(occupied);
-    // Проверка за припокриване с вече поставени кораби
     const allOccupied = [
       ...tempShips.flatMap((s) => [...s.occupied, ...s.bufferZone]),
     ];
@@ -170,7 +159,6 @@ const Board = () => {
     }));
   };
 
-  // Завършване на фазата на поставяне – първо за Player 1, после за Player 2.
   const handlePlacementDone = () => {
     const allShipsPlaced = SHIP_TYPES.every(
       (ship) => placedShipsCount[ship.type] >= ship.count
@@ -204,13 +192,11 @@ const Board = () => {
     }
   };
 
-  // Стартиране на битката.
   const handleStartBattle = () => {
     setIsBattleStarted(true);
     setTimer(60);
   };
 
-  // Обработка на нормална атака – при клик върху клетка.
   const handleAttack = (index) => {
     if (!isBattleStarted) return;
     if (activePlayer === 1) {
@@ -226,7 +212,6 @@ const Board = () => {
     }
   };
 
-  // Обработка на drop за специална муниция върху вражеската дъска.
   const handleSpecialDrop = (e, cellIndex) => {
     e.preventDefault();
     if (!isBattleStarted) return;
@@ -234,7 +219,6 @@ const Board = () => {
     if (!special) return;
 
     if (special === "airplane") {
-      // Самолетът поражда 4 клетки: целевата, клетката вдясно, отдолу и диагонално вдясно-отдолу (ако са валидни).
       let targets = [cellIndex];
       if (cellIndex % 10 < 9) targets.push(cellIndex + 1);
       if (cellIndex + 10 < 100) targets.push(cellIndex + 10);
@@ -264,7 +248,6 @@ const Board = () => {
       }
       switchTurn();
     } else if (special === "bomb") {
-      // Бомбата поражда 2 клетки: целевата и клетката вдясно (ако е налична).
       let targets = [cellIndex];
       if (cellIndex % 10 < 9) targets.push(cellIndex + 1);
 
@@ -287,9 +270,6 @@ const Board = () => {
     }
   };
 
-  // Функция за рендиране на мрежата (grid) – в зависимост от режима:
-  // mode: "placement", "player", "opponent"
-  ///////
   const handleRemoveLastShip = () => {
     if (tempShips.length === 0) return;
 
@@ -322,7 +302,7 @@ const Board = () => {
               shipOrientation = ship.shipOrientation;
 
               const shipIndex = ship.occupied.indexOf(i);
-              const cellSize = 30; // Размер на клетката в пиксели
+              const cellSize = 30; 
 
               if (shipOrientation === "horizontal") {
                 shipPartStyle = {
@@ -398,7 +378,6 @@ const Board = () => {
     );
   };
 
-  // Проверка дали всички кораби са поставени за бутона Done Placement
   const allShipsPlaced = SHIP_TYPES.every(
     (ship) => placedShipsCount[ship.type] >= ship.count
   );
