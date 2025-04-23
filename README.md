@@ -17,7 +17,7 @@ A classic naval warfare game implemented in React.
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ivanwe2_battleships-react&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ivanwe2_battleships-react)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=ivanwe2_battleships-react&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=ivanwe2_battleships-react)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=ivanwe2_battleships-react&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=ivanwe2_battleships-react)
-<!-- [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ivanwe2_battleships-react&metric=coverage)](https://sonarcloud.io/summary/new_code?id=ivanwe2_battleships-react) -->
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ivanwe2_battleships-react&metric=coverage)](https://sonarcloud.io/summary/new_code?id=ivanwe2_battleships-react)
 
 ### Detailed Metrics
 
