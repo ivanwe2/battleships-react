@@ -31,6 +31,7 @@ const Game = () => {
   const [messages, setMessages] = useState([]);
   const [ws, setWs] = useState(null);
   const [gameReady, setGameReady] = useState(false);
+  const [currentGameId, setCurrentGameId] = useState(gameId); // Track the current game ID separately
   
   // Add message to the message log
   const addMessage = useCallback((message) => {
@@ -46,25 +47,25 @@ const Game = () => {
   
     socket.onopen = () => {
       addMessage('Connected to server');
-      // Only join the game if gameId exists
-      if (gameId) {
-        // Add a short delay to ensure the server is ready to process the join request
-        setTimeout(() => {
+      
+      // Add a short delay to ensure the connection is fully established
+      setTimeout(() => {
+        // Only join the game if gameId exists
+        if (gameId) {
           socket.send(JSON.stringify({ 
             type: 'JOIN_GAME', 
             gameId, 
             player,
-            // Add a timestamp to help with server side debugging
             timestamp: new Date().getTime()
           }));
-        }, 500);
-      } else {
-        // If no gameId, create a new game instead
-        socket.send(JSON.stringify({
-          type: 'CREATE_GAME',
-          player
-        }));
-      }
+        } else {
+          // If no gameId, create a new game instead
+          socket.send(JSON.stringify({
+            type: 'CREATE_GAME',
+            player
+          }));
+        }
+      }, 1000); // Increased delay for reliability
     };
   
     socket.onmessage = handleSocketMessage;
@@ -76,16 +77,25 @@ const Game = () => {
   
     socket.onclose = () => {
       addMessage('Disconnected from server');
+      
+      // You might want to implement reconnection logic here
+      // For example:
+      setTimeout(() => {
+        if (document.visibilityState !== 'hidden') {
+          addMessage('Attempting to reconnect...');
+          navigate('/game', { state: { player, opponent, gameId: currentGameId }});
+        }
+      }, 3000);
     };
   
     return () => {
       // Leave the game when component unmounts
-      if (socket.readyState === WebSocket.OPEN && gameId) {
-        socket.send(JSON.stringify({ type: 'LEAVE_GAME', gameId, player }));
+      if (socket.readyState === WebSocket.OPEN && currentGameId) {
+        socket.send(JSON.stringify({ type: 'LEAVE_GAME', gameId: currentGameId, player }));
       }
       socket.close();
     };
-  }, [gameId, player, addMessage]);
+  }, [gameId, player, addMessage, navigate, opponent, currentGameId]);
 
   // Handle receiving an attack
   const handleIncomingAttack = useCallback((position) => {
@@ -128,7 +138,7 @@ const Game = () => {
     // Send result back to server
     ws.send(JSON.stringify({
       type: 'ATTACK_RESULT',
-      gameId,
+      gameId: currentGameId,
       attacker: opponent,
       defender: player,
       position,
@@ -145,7 +155,7 @@ const Game = () => {
         "Opponent hit your ship!"
       );
     }
-  }, [playerBoard, placedShips, ws, gameId, opponent, player, addMessage]);
+  }, [playerBoard, placedShips, ws, currentGameId, opponent, player, addMessage]);
 
   // Handle attack result
   const handleAttackResult = useCallback((data) => {
@@ -169,74 +179,100 @@ const Game = () => {
   }, [opponentBoard, addMessage]);
 
   const handleSocketMessage = useCallback((event) => {
-    const data = JSON.parse(event.data);
-    console.log('Received message:', data);
-  
-    switch (data.type) {
-      case 'GAME_CREATED':
-        addMessage(`Game created with ID: ${data.gameId}`);
-        // Update the gameId state if not already set
-        if (!gameId) {
-          navigate('/game', { state: { player, opponent: 'Waiting for opponent', gameId: data.gameId }});
-        }
-        break;
+    try {
+      const data = JSON.parse(event.data);
+      console.log('Received message:', data);
+    
+      switch (data.type) {
+        case 'GAME_CREATED':
+          addMessage(`Game created with ID: ${data.gameId}`);
+          // Update the gameId state
+          setCurrentGameId(data.gameId);
+          navigate('/game', { state: { player, opponent: 'Waiting for opponent', gameId: data.gameId }, replace: true });
+          break;
+          
+        case 'GAME_JOINED':
+          addMessage(`${data.player} joined the game`);
+          break;
         
-      case 'GAME_JOINED':
-        addMessage(`${data.player} joined the game`);
-        break;
-      
-      case 'GAME_LEFT':
-        addMessage(`${data.player} left the game`);
-        break;
-      
-      case 'SHIPS_PLACED':
-        addMessage(`${data.player} placed all ships`);
-        break;
-      
-      case 'GAME_READY':
-        setGamePhase('battle');
-        setGameReady(true);
-        setIsPlayerTurn(data.firstPlayer === player);
-        addMessage(`Game started! ${data.firstPlayer} goes first`);
-        break;
-      
-      case 'ATTACK':
-        handleIncomingAttack(data.position);
-        break;
-      
-      case 'ATTACK_RESULT':
-        handleAttackResult(data);
-        break;
-      
-      case 'GAME_OVER':
-        setGamePhase('gameOver');
-        setWinner(data.winner);
-        addMessage(`Game over! ${data.winner} wins!`);
-        break;
-      
-      case 'CHAT':
-        addMessage(`${data.from}: ${data.message}`);
-        break;
-      
-      case 'ERROR':
-        addMessage(`Error: ${data.message}`);
-        if (data.message === 'Game not found') {
-          // If game not found, let's try to create a new game
-          setTimeout(() => {
-            if (ws && ws.readyState === WebSocket.OPEN) {
-              ws.send(JSON.stringify({
-                type: 'CREATE_GAME',
-                player
-              }));
-            }
-          }, 1000);
-        }
-        break;
-      
-      default:
-        break;
+        case 'GAME_LEFT':
+          addMessage(`${data.player} left the game`);
+          break;
+        
+        case 'SHIPS_PLACED':
+          addMessage(`${data.player} placed all ships`);
+          break;
+        
+        case 'GAME_READY':
+          setGamePhase('battle');
+          setGameReady(true);
+          setIsPlayerTurn(data.firstPlayer === player);
+          addMessage(`Game started! ${data.firstPlayer} goes first`);
+          break;
+        
+        case 'ATTACK':
+          handleIncomingAttack(data.position);
+          break;
+        
+        case 'ATTACK_RESULT':
+          handleAttackResult(data);
+          break;
+        
+        case 'GAME_OVER':
+          setGamePhase('gameOver');
+          setWinner(data.winner);
+          addMessage(`Game over! ${data.winner} wins!`);
+          break;
+        
+        case 'CHAT':
+          addMessage(`${data.from}: ${data.message}`);
+          break;
+        
+        case 'ERROR':
+          addMessage(`Error: ${data.message}`);
+          // If game not found, try to create a new game
+          if (data.message === 'Game not found') {
+            setTimeout(() => {
+              if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({
+                  type: 'CREATE_GAME',
+                  player
+                }));
+              }
+            }, 1000);
+          }
+          break;
+        
+        case 'RECONNECTED':
+          addMessage(`Reconnected to game against ${data.opponent}`);
+          // Update the current game ID
+          if (data.gameId && data.gameId !== currentGameId) {
+            setCurrentGameId(data.gameId);
+          }
+          if (data.gamePhase === 'battle') {
+            setGamePhase('battle');
+            setGameReady(true);
+          }
+          break;
+        
+        case 'START_GAME':
+          // This is received when a game is ready to start
+          if (data.gameId && data.gameId !== currentGameId) {
+            setCurrentGameId(data.gameId);
+            navigate('/game', { state: { player, opponent: data.opponent, gameId: data.gameId }, replace: true });
+          }
+          addMessage(`Starting game against ${data.opponent}`);
+          break;
+        
+        default:
+          console.log(`Unhandled message type: ${data.type}`);
+          break;
+      }
+    } catch (error) {
+      console.error('Error processing websocket message:', error);
+      addMessage('Error processing game data');
     }
-  }, [player, addMessage, gameId, navigate, ws, handleIncomingAttack, handleAttackResult]);
+  }, [player, addMessage, navigate, ws, handleIncomingAttack, handleAttackResult, currentGameId]);
 
   // Get all cells occupied by a ship
   const getShipCells = useCallback((ship) => {
@@ -337,7 +373,7 @@ const Game = () => {
       if (gamePhase === 'battle' && isPlayerTurn && opponentBoard[row][col] === null) {
         ws.send(JSON.stringify({
           type: 'ATTACK',
-          gameId,
+          gameId: currentGameId,
           attacker: player,
           defender: opponent,
           position: { row, col }
@@ -349,7 +385,7 @@ const Game = () => {
         placeShip(selectedShip, row, col);
       }
     }
-  }, [gamePhase, isPlayerTurn, opponentBoard, ws, gameId, player, opponent, selectedShip, placeShip]);
+  }, [gamePhase, isPlayerTurn, opponentBoard, ws, currentGameId, player, opponent, selectedShip, placeShip]);
 
   // Rotate ship orientation
   const rotateShip = useCallback(() => {
@@ -372,15 +408,19 @@ const Game = () => {
       return;
     }
     
-    ws.send(JSON.stringify({
-      type: 'SHIPS_PLACED',
-      gameId,
-      player,
-      ships: placedShips
-    }));
-    
-    addMessage('Ready for battle! Waiting for opponent...');
-  }, [placedShips, ws, gameId, player, addMessage]);
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({
+        type: 'SHIPS_PLACED',
+        gameId: currentGameId,
+        player,
+        ships: placedShips
+      }));
+      
+      addMessage('Ready for battle! Waiting for opponent...');
+    } else {
+      addMessage('Error: Connection lost. Please refresh the page.');
+    }
+  }, [placedShips, ws, currentGameId, player, addMessage]);
 
   // Render a single cell
   const renderCell = useCallback((row, col, isOpponentBoard = false) => {
@@ -574,9 +614,12 @@ const Game = () => {
             </div>
           ))}
         </div>
+        {currentGameId && (
+          <div className="game-id">Game ID: {currentGameId}</div>
+        )}
       </div>
     );
-  }, [messages]);
+  }, [messages, currentGameId]);
 
   return (
     <div className="game-container">
