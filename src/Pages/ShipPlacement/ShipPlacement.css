@@ -1,0 +1,137 @@
+.placement-phase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  color: white;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.board-row {
+  display: flex;
+  gap: 2px;
+}
+
+.board-cell {
+  width: 30px;
+  height: 30px;
+  background-color: #2c3e50;
+  border: 1px solid #34495e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.board-cell:hover {
+  background-color: #3a6d91;
+}
+
+.ship-cell {
+  background-color: #2a7b2a;
+}
+
+.valid-placement {
+  background-color: rgba(0, 255, 0, 0.3);
+  box-shadow: 0 0 5px #2a7b2a;
+  transform: scale(1.05);
+}
+
+.invalid-placement {
+  background-color: rgba(255, 0, 0, 0.3);
+  box-shadow: 0 0 5px #cc0000;
+}
+
+.placement-controls {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: rgba(29, 78, 137, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+}
+
+.ship-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.ship-button {
+  padding: 8px 16px;
+  background-color: #4b7f92;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ship-button:hover {
+  background-color: #6a95a6;
+  transform: scale(1.05);
+}
+
+.ship-button.selected {
+  background-color: #cc0000;
+  transform: scale(1.1);
+}
+
+.ship-button.disabled {
+  background-color: #333;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.placement-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+button {
+  padding: 8px 16px;
+  background-color: #4b7f92;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+  background-color: #cc0000;
+  transform: scale(1.05);
+}
+
+button:disabled {
+  background-color: #333;
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.finish-button {
+  background-color: #2a7b2a;
+}
+
+.finish-button:disabled {
+  background-color: #333;
+}
+
+@media (max-width: 768px) {
+  .board-cell {
+    width: 25px;
+    height: 25px;
+  }
+}
