@@ -8,64 +8,7 @@
   color: white;
 }
 
-.board {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.board-row {
-  display: flex;
-  gap: 2px;
-}
-
-.board-cell {
-  width: 30px;
-  height: 30px;
-  background-color: #2c3e50;
-  border: 1px solid #34495e;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  position: relative;
-  transition: all 0.2s ease;
-}
-
-.board-cell:hover {
-  background-color: #3a6d91;
-}
-
-.ship-cell {
-  background-color: #2a7b2a;
-}
-
-.hit-cell {
-  background-color: #cc0000;
-  color: white;
-}
-
-.miss-cell {
-  background-color: #4a6a8a;
-  color: white;
-}
-
-.valid-placement {
-  background-color: rgba(0, 255, 0, 0.3);
-  box-shadow: 0 0 5px #2a7b2a;
-  transform: scale(1.05);
-}
-
-.invalid-placement {
-  background-color: rgba(255, 0, 0, 0.3);
-  box-shadow: 0 0 5px #cc0000;
-}
-
-.placement-preview {
-  opacity: 0.6;
-  background-color: #2a7b2a;
-}
-
+/* Game log messages */
 .messages {
   margin-top: 20px;
   width: 100%;
@@ -93,59 +36,27 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.placement-controls,
-.battle-controls {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 15px;
-  background-color: rgba(29, 78, 137, 0.5);
-  backdrop-filter: blur(10px);
+/* Game Over screen */
+.game-over {
+  text-align: center;
+  padding: 30px;
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
+  margin: 20px 0;
 }
 
-.ship-selector {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 15px;
+.game-over h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
 }
 
-.ship-button,
-.special-button {
-  padding: 8px 16px;
-  background-color: #4b7f92;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.ship-button:hover,
-.special-button:hover {
-  background-color: #6a95a6;
-  transform: scale(1.05);
-}
-
-.ship-button.selected,
-.special-button.selected {
+.game-over button {
+  padding: 12px 24px;
+  font-size: 18px;
   background-color: #cc0000;
-  transform: scale(1.1);
 }
 
-.ship-button.disabled {
-  background-color: #333;
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.placement-actions,
-.special-attacks {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
+/* Common button styles */
 button {
   padding: 8px 16px;
   background-color: #4b7f92;
@@ -168,68 +79,13 @@ button:disabled {
   transform: none;
 }
 
-.finish-button {
-  background-color: #2a7b2a;
-}
-
-.finish-button:disabled {
-  background-color: #333;
-}
-
-.boards-container {
-  display: flex;
-  gap: 40px;
-  justify-content: center;
-  width: 100%;
-}
-
-.player-board,
-.opponent-board {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.turn-info {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
-  font-weight: bold;
-}
-
-.game-over {
-  text-align: center;
-  padding: 30px;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
-  margin: 20px 0;
-}
-
-.game-over h2 {
-  font-size: 32px;
-  margin-bottom: 20px;
-}
-
-.game-over button {
-  padding: 12px 24px;
-  font-size: 18px;
-  background-color: #cc0000;
-}
-
+/* Responsive design */
 @media (max-width: 768px) {
-  .boards-container {
-    flex-direction: column;
+  .game-container {
+    padding: 10px;
   }
 
-  .board-cell {
-    width: 25px;
-    height: 25px;
+  .messages {
+    max-height: 150px;
   }
-}
-
-.special-attacks.disabled {
-  opacity: 0.5;
-  pointer-events: none;
-  cursor: not-allowed;
 }
