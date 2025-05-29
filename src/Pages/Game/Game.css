@@ -50,7 +50,6 @@
   color: white;
 }
 
-/* New placement feedback styles */
 .valid-placement {
   background-color: rgba(0, 255, 0, 0.3);
   box-shadow: 0 0 5px #2a7b2a;
@@ -227,4 +226,10 @@ button:disabled {
     width: 25px;
     height: 25px;
   }
+}
+
+.special-attacks.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
 }
