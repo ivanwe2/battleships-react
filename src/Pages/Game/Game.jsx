@@ -66,10 +66,10 @@ const Game = () => {
   const [gamePhase, setGamePhase] = useState("lobby");
   const [activePlayer, setActivePlayer] = useState(1);
   const [playerShips, setPlayerShips] = useState([]);
-  const [opponentShips, setOpponentShips] = useState([]);
+  //const [opponentShips, setOpponentShips] = useState([]);
   const [playerBoard, setPlayerBoard] = useState(createEmptyBoard());
   const [opponentBoard, setOpponentBoard] = useState(createEmptyBoard());
-  const [playerAttacks, setPlayerAttacks] = useState([]);
+  //const [playerAttacks, setPlayerAttacks] = useState([]);
   const [opponentAttacks, setOpponentAttacks] = useState([]);
   const [orientation, setOrientation] = useState("horizontal");
   const [selectedShipType, setSelectedShipType] = useState(null);
@@ -209,7 +209,7 @@ const Game = () => {
           });
           break;
         case "SHIP_PLACEMENT":
-          setOpponentShips(data.ships);
+          //setOpponentShips(data.ships);
           break;
         case "GAME_START":
           setGamePhase("battle");
@@ -482,7 +482,7 @@ const Game = () => {
     newBoard[row] = [...newBoard[row]];
     newBoard[row][col] = isHit ? "hit" : "miss";
     setOpponentBoard(newBoard);
-    setPlayerAttacks((prev) => [...prev, { row, col }]);
+    //setPlayerAttacks((prev) => [...prev, { row, col }]);
     setMessages((prev) => [
       ...prev,
       `You attacked ${row},${col} - ${isHit ? "HIT!" : "Miss"}`,
